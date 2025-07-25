@@ -1,0 +1,6 @@
+﻿
+<rect class=@GetClasses() @onclick="OnClick" x=@GetX() y=@GetY() width="40" height="40" fill=@GetColor() />
+@if (FieldContainsPiece(out var pieceImagePath))
+{
+    <image @onclick="OnClick" x=@GetPieceX() y=@GetPieceY() width="30" height="30" href=@pieceImagePath />
+}

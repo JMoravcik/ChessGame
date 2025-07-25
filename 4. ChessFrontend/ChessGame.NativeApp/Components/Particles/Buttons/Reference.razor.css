@@ -1,0 +1,11 @@
+﻿
+a {
+    color: #2193b0 !important;
+    text-decoration: none !important;
+    font-weight: 500 !important;
+    cursor: pointer;
+}
+
+    a:hover {
+        text-decoration: underline !important;
+    }

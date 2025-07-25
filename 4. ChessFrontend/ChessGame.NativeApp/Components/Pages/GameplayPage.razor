@@ -1,0 +1,11 @@
+﻿@page "/gameplay"
+@using ChessGame.NativeApp.Components.Chessboard;
+<PageTitle>gameplay</PageTitle>
+
+<Initialize Initializable="this">
+    @if (GameplayManager.GameState is not null)
+    {
+        <ChessboardView Minimap="@GameplayManager.GameState.Minimap" LegalMoves="GameplayManager.GameState.LegalMoves" />
+    }
+
+</Initialize>

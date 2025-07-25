@@ -1,0 +1,19 @@
+﻿@typeparam TItem
+
+<Initialize Initializable="this">
+
+    <div class="paginated-list">
+        <ul>
+            @foreach (var item in CurrentPageResponse.Data ?? new())
+            {
+                <li>@ItemTemplate(item)</li>
+            }
+        </ul>
+
+        <div class="pagination">
+            <button @onclick="PreviousPageAsync" disabled="@(_currentPage == 1)">« Předchozí</button>
+            <span>Stránka @_currentPage / @TotalPages</span>
+            <button @onclick="NextPageAsync" disabled="@(_currentPage == TotalPages)">Další »</button>
+        </div>
+    </div>
+</Initialize>

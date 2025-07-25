@@ -1,0 +1,24 @@
+﻿<div class="login-container">
+
+  <div class="login-form">
+    <h2>@ChessGameNativeAppRes.BasicAuthView_Caption</h2>
+    <StringEdit @bind-Value="Email" 
+                Label=@ChessGameNativeAppRes.BasicAuthView_EmailLabel 
+                Placeholder=@ChessGameNativeAppRes.BasicAuthView_EmailPlaceholder 
+                Id="email" />
+
+    <StringEdit @bind-Value="Password" 
+                Type="StringEditTypeEnum.password"
+                Label=@ChessGameNativeAppRes.BasicAuthView_PasswordLabel 
+                Placeholder=@ChessGameNativeAppRes.BasicAuthView_PasswordPlaceholder 
+                Id="password" />
+
+    <Button Title=@ChessGameNativeAppRes.BasicAuthView_LoginButtonTitle 
+            Clicked="OnLoginAsync" />
+
+    <p class="register-link">@ChessGameNativeAppRes.BasicAuthView_BasicAuthAccountQuestion
+        <Reference Clicked="OnChangeView" 
+                   Title=@ChessGameNativeAppRes.BasicAuthView_RegistrationReferenceTitle/>
+   </p>
+  </div>
+</div>

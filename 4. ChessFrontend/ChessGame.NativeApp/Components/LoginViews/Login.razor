@@ -1,0 +1,14 @@
+﻿<div class="login-page">
+    <div class="login-container">
+        @switch (CurrentView)
+        {
+            case Enums.LoginViewEnum.LoginView:
+                <BasicAuthView ViewChanged="OnChangeView" />
+                break;
+
+            case Enums.LoginViewEnum.RegistrationView:
+                <RegistrationView ViewChanged="OnChangeView" />
+                break;
+        }
+    </div>
+</div>

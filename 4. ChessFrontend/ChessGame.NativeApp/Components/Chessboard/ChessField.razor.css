@@ -1,0 +1,7 @@
+﻿.selected {
+
+}
+
+.selectable {
+    filter: brightness(50%);
+}

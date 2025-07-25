@@ -1,0 +1,11 @@
+﻿@if (AuthorizationManager.Initialized)
+{
+    @if (AuthorizationManager.IsAuthenticated)
+    {
+        @Authorized
+    }
+    else
+    {
+        @NotAuthorized
+    }
+}

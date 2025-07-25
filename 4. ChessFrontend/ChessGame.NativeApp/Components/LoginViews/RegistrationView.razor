@@ -1,0 +1,35 @@
+﻿<div class="login-container">
+    <div class="login-form">
+        <h2>@ChessGameNativeAppRes.RegistrationView_Caption</h2>
+        <StringEdit @bind-Value="_userProfile.Email" 
+                    Label=@ChessGameNativeAppRes.RegistrationView_EmailLabel 
+                    Placeholder=@ChessGameNativeAppRes.RegistrationView_PasswordPlaceholder 
+                    Id="email" />
+
+        <StringEdit @bind-Value="_userProfile.NickName" 
+                    Label=@ChessGameNativeAppRes.RegistrationView_NicknameLabel 
+                    Placeholder=@ChessGameNativeAppRes.RegistrationView_NicknamePlaceholder 
+                    Id="nickname" />
+
+        <StringEdit @bind-Value="Password" 
+                    Type="StringEditTypeEnum.password"
+                    Label=@ChessGameNativeAppRes.RegistrationView_PasswordLabel 
+                    Placeholder=@ChessGameNativeAppRes.RegistrationView_PasswordPlaceholder 
+                    Id="password" />
+
+        <StringEdit @bind-Value="RepeatPassword" 
+                    Type="StringEditTypeEnum.password"
+                    Label=@ChessGameNativeAppRes.RegistrationView_RepeatPasswordLabel 
+                    Placeholder=@ChessGameNativeAppRes.RegistrationView_RepeatPasswordPlaceholder 
+                    Id="password" />
+
+        <Button Title=@ChessGameNativeAppRes.RegistrationView_RegistrationButtonLabel 
+                Clicked="OnRegisterAsync" />
+
+        <p class="register-link">
+            @ChessGameNativeAppRes.RegistrationView_DoYouHaveAccount
+            <Reference Clicked="OnChangeView" 
+                       Title=@ChessGameNativeAppRes.RegistrationView_LoginReferenceTitle />
+        </p>
+    </div>
+</div>

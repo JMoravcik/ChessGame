@@ -1,0 +1,48 @@
+services:
+  database:
+    image: postgres:16
+    container_name: database
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: examplepassword
+      POSTGRES_DB: appdb
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+  accessservice.api:
+    image: ${DOCKER_REGISTRY-}accessserviceapi
+    environment:
+      Database__ConnectionString: "Host=database;Port=5432;Database=postgres;Username=postgres;Password=examplepassword"
+      ChessService__BaseUrl: http://chessservice.api:8080/
+    build:
+      context: .
+      dockerfile: 3. AccessService/AccessService.Api/Dockerfile
+    ports:
+        - "5000:8080"
+        - "5001:8081"
+    depends_on:
+      - chessservice.api
+      - database 
+    links:
+      - "database:database"
+      - "chessservice.api:chessservice.api"
+
+  chessservice.api:
+    image: ${DOCKER_REGISTRY-}chessserviceapi
+    environment:
+      Database__ConnectionString: "Host=database;Port=5432;Database=postgres;Username=postgres;Password=examplepassword"
+    build:
+      context: .
+      dockerfile: 2. ChessService/ChessService.Api/Dockerfile
+    ports:
+        - "5100:8080"
+        - "5101:8081"
+    depends_on:
+      - database
+    links:
+      - "database:database"
+
+volumes:
+  pgdata:

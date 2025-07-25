@@ -1,0 +1,26 @@
+﻿@inherits LayoutComponentBase
+
+<Initialize Initializable="this">
+    <Authorization>
+        <Authorized>
+            <div class="page">
+                <div class="sidebar">
+                    <NavMenu />
+                </div>
+
+                <main>
+                    <div class="top-row px-4">
+                        @ChessGameNativeAppRes.MainLayout_Greetings &nbsp; <b>@AuthorizationManager.UserProfile!.NickName</b>! <Reference Clicked="AuthorizationManager.LogoutAsync" Title=@ChessGameNativeAppRes.MainLayout_Logout></Reference>
+                    </div>
+
+                    <article class="content px-4">
+                        @Body
+                    </article>
+                </main>
+            </div>
+        </Authorized>
+        <NotAuthorized>
+            <ChessGame.NativeApp.Components.LoginViews.Login/>
+        </NotAuthorized>
+    </Authorization>
+</Initialize>
