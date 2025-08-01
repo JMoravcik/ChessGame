@@ -1,4 +1,7 @@
 ﻿using ChessGame.AccessService.Contracts.IServices;
+using ChessGame.ChessService.Contracts.HubLinker;
+using ChessGame.ChessService.Contracts.HubMessages;
+using ChessGame.ChessService.Contracts.IHub;
 using ChessGame.ChessService.Contracts.IServices;
 using ChessGame.ChessService.Contracts.Responses;
 using ChessGame.Common.Bases;
@@ -15,16 +18,20 @@ public class GameplayManager
     private readonly AuthorizationManager _authorizationManager;
     private readonly IChessAccessService _chessAccessService;
     private readonly IChessService _chessService;
+    private readonly IChessGameHub _chessGameHub;
+    private readonly LinkerContext _linkerContext;
 
     public GameRecord? GameRecord { get; private set; }
     public GetGameStateResponse? GameState { get; private set; }
 
-    public GameplayManager(NavigationManager navigationManager, AuthorizationManager authorizationManager, IChessAccessService chessAccessService, IChessService chessService)
+    public GameplayManager(NavigationManager navigationManager, AuthorizationManager authorizationManager, IChessAccessService chessAccessService, IChessService chessService, IChessGameHub chessGameHub, LinkerContext linkerContext)
     {
         _navigationManager = navigationManager;
         _authorizationManager = authorizationManager;
         _chessAccessService = chessAccessService;
         _chessService = chessService;
+        _chessGameHub = chessGameHub;
+        _linkerContext = linkerContext;
     }
 
     [MemberNotNullWhen(true, nameof(GameRecord))]
@@ -35,7 +42,7 @@ public class GameplayManager
         if (!response.ResponseIsValid())
             return;
 
-        SetGameRecord(response.Data.GameRecord);
+        await SetGameRecordAsync(response.Data.GameRecord);
     }
 
     public async Task GetGameStateAsync()
@@ -47,7 +54,7 @@ public class GameplayManager
             if (GameRecord == null)
                 throw new Exception("No game record found for the current user.");
             else
-                SetGameRecord(GameRecord);
+                await SetGameRecordAsync(GameRecord);
         }
 
         var response = await _chessService.GetGameStateAsync(GameRecord.Id);
@@ -56,6 +63,7 @@ public class GameplayManager
 
         if (response.Data.IsFinished)
         {
+            await UnsetGameRecordAsync();
             _navigationManager.NavigateTo("/");
             return;
         }
@@ -70,20 +78,45 @@ public class GameplayManager
 
         if (response.Data.Playing != null)
         {
-            SetGameRecord(response.Data.Playing);
+            await SetGameRecordAsync(response.Data.Playing);
         }
 
         return response.Data.GameRecords;
     }
 
-    private void SetGameRecord(GameRecord gameRecord)
+    private async Task SetGameRecordAsync(GameRecord gameRecord)
     {
         GameRecord = gameRecord;
         if (_chessService is Linker linker)
         {
             linker.SetServerBaseUrl(gameRecord.ServerUrl);
         }
+        if (_chessGameHub is ChessGameHubLinker hubLinker)
+        {
+            await hubLinker.ConnectAsync(gameRecord.ServerUrl);
+            await AuthenticateToHubAsync();
+        }
 
         _navigationManager.NavigateTo("/gameplay");
+    }
+
+    private async Task UnsetGameRecordAsync()
+    {
+        GameRecord = null;
+        GameState = null;
+        if (_chessGameHub is ChessGameHubLinker hubLinker)
+        {
+            await hubLinker.DisconnectAsync();
+        }
+
+    }
+
+    private async Task AuthenticateToHubAsync()
+    {
+        await _chessGameHub.LoginInfoAsync(new AuthenticationInfo()
+        {
+            DeviceToken = await _linkerContext.GetDeviceTokenAsync(),
+            UserToken = (await _linkerContext.GetAuthTokenAsync())!
+        });
     }
 }

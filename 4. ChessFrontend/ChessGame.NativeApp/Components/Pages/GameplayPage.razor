@@ -5,7 +5,7 @@
 <Initialize Initializable="this">
     @if (GameplayManager.GameState is not null)
     {
-        <ChessboardView Minimap="@GameplayManager.GameState.Minimap" LegalMoves="GameplayManager.GameState.LegalMoves" />
+        <ChessboardView Minimap="@GameplayManager.GameState.Minimap" LegalMoves="GameplayManager.GameState.LegalMoves" MoveSelected="OnMoveSelectAsync" />
     }
 
 </Initialize>

@@ -1,4 +1,6 @@
 using ChessGame.Backend.Common.Scopeds.Database;
+using ChessGame.ChessService.Api.Hubs;
+using ChessGame.ChessService.Contracts.IHub;
 using ChessGame.Common.DI_Tools;
 using Microsoft.EntityFrameworkCore;
 
@@ -15,7 +17,7 @@ builder.Services.AddDbContext<IRepository, ChessgameDbContext>(options =>
     options.UseNpgsql(connectionString);
 });
 builder.Services.SetupDependencies(new EnvironmentInfo(builder.Configuration));
-
+builder.Services.AddSignalR();
 var app = builder.Build();
 
 app.StartupDependencies();
@@ -26,6 +28,8 @@ if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
 }
+
+app.MapHub<ChessGameHub>($"/{IChessGameHub.HubUrl}");
 
 app.UseAuthorization();
 

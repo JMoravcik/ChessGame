@@ -5,7 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace ChessGame.AccessService.Contracts.Linkers;
 
-public class AccessServiceContracts_LinkersSetup : LinkerSetup
+public class AccessServiceContracts_LinkersSetup : ConfigurableSetup
 {
     public AccessServiceContracts_LinkersSetup(EnvironmentInfo environment) : base(environment, "AccessServiceLinkers")
     {
@@ -16,7 +16,7 @@ public class AccessServiceContracts_LinkersSetup : LinkerSetup
         if (IsSameApiLinkersAreReferencingTo("AccessService.Api"))
             return;
 
-        RegisterLinker<IAuthenticationService, AuthenticationLinker>(serviceCollection);
-        RegisterLinker<IChessAccessService, ChessAccessLinker>(serviceCollection);
+        Register<IAuthenticationService, AuthenticationLinker>(serviceCollection);
+        Register<IChessAccessService, ChessAccessLinker>(serviceCollection);
     }
 }

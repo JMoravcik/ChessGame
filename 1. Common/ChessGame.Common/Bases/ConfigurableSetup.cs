@@ -1,32 +1,36 @@
 ﻿using ChessGame.Common.DI_Tools;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ChessGame.Common.Bases;
 
-public abstract class LinkerSetup : Setup
+public abstract class ConfigurableSetup : Setup
 {
     private readonly bool _asSingleton;
 
-    public LinkerSetup(EnvironmentInfo environment, string configSection) : base(environment)
+    public ConfigurableSetup(EnvironmentInfo environment, string configSection) : base(environment)
     {
         _asSingleton = environment.Configuration.GetValue($"{configSection}:AsSingleton", true);
     }
 
-    protected void RegisterLinker<TInterface, TLinker>(IServiceCollection serviceCollection)
-        where TLinker : Linker, TInterface
+    protected void Register<TInterface, TLinker>(IServiceCollection serviceCollection)
+        where TLinker : class, TInterface
         where TInterface : class
     {
         if (_asSingleton)
             serviceCollection.AddSingleton<TInterface, TLinker>();
         else
             serviceCollection.AddScoped<TInterface, TLinker>();
+    }
+
+    protected void Register<TImplementation>(IServiceCollection serviceCollection)
+        where TImplementation : class
+    {
+        if (_asSingleton)
+            serviceCollection.AddSingleton<TImplementation>();
+        else
+            serviceCollection.AddScoped<TImplementation>();
     }
 
     protected bool IsSameApiLinkersAreReferencingTo(string recognizingNameString)

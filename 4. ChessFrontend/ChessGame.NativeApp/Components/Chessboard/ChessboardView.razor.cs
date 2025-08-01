@@ -31,6 +31,14 @@ public partial class ChessboardView : ComponentBase
             _selectableLegalMoves.Clear();
             return;
         }
+        if (_selectableLegalMoves.FirstOrDefault(legalMove => GetTargetField(legalMove).StartsWith(selectedField)) is string legalMove)
+        {
+            _selectedField = string.Empty;
+            _selectableLegalMoves.Clear();
+            MoveSelected.InvokeAsync(legalMove);
+            return;
+        }
+
         _selectedField = selectedField;
 
         _selectableLegalMoves = LegalMoves.Where(IsSelectedFieldsLegalMove).ToList();
@@ -40,6 +48,7 @@ public partial class ChessboardView : ComponentBase
             return;
         }
     }
+
 
     private bool IsSelectedFieldsLegalMove(string legalMove) => GetSourceField(legalMove).StartsWith(_selectedField);
 

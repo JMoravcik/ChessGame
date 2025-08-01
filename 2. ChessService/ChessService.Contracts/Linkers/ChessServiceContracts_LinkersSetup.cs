@@ -7,7 +7,7 @@ using System.Reflection;
 
 namespace ChessGame.ChessService.Contracts.Linkers;
 
-public class ChessServiceContracts_LinkersSetup : LinkerSetup
+public class ChessServiceContracts_LinkersSetup : ConfigurableSetup
 {
     public ChessServiceContracts_LinkersSetup(EnvironmentInfo environment) : base(environment, "ChessServiceLinkers")
     {
@@ -18,6 +18,6 @@ public class ChessServiceContracts_LinkersSetup : LinkerSetup
         if (IsSameApiLinkersAreReferencingTo("ChessService.Api"))
             return;
 
-        RegisterLinker<IChessService, ChessLinker>(serviceCollection);
+        Register<IChessService, ChessLinker>(serviceCollection);
     }
 }

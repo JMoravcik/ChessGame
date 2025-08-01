@@ -1,4 +1,5 @@
-﻿using ChessGame.Common.Entities.Game;
+﻿using ChessGame.ChessService.Contracts.MoveResults;
+using ChessGame.Common.Entities.Game;
 
 namespace ChessGame.ChessService.ChessLogic;
 
@@ -12,5 +13,7 @@ public interface IChessManager
     Guid CreateNewGame(Guid whitePlayerId, Guid? blackPlayerId);
     int[][]? GetMinimap(Guid gameId);
     List<string> GetMoves(Guid gameId, Guid playerId);
-    void JoinGame(Guid gameId, Guid blackPlayerId);
+    bool IsInGame(Guid playerId, out Guid gameId);
+    bool JoinGame(Guid gameId, Guid blackPlayerId);
+    MoveResult MakeMove(Guid playerId, Guid gameId, string move);
 }

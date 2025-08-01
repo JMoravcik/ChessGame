@@ -9,44 +9,47 @@ namespace ChessGame.ChessService.ChessLogic;
 
 public partial class ChessGame
 {
-    private readonly Guid _whitePlayerId;
-    private Guid _blackPlayerId;
+    public Guid WhitePlayerId { get; private set; }
+
+    public Guid BlackPlayerId { get; private set; }
 
     private readonly Chessboard _chessboard;
     private readonly LegalMoves _legalMoves;
-    private Guid _playerOnMove;
-    private Guid _playerInWaiting => _playerOnMove == _whitePlayerId ? _blackPlayerId : _whitePlayerId;
+
+    public bool WhiteOnMove = true;
+    public bool WhiteInWaiting => !WhiteOnMove;
+
     public ChessGame(Guid whitePlayerId, Guid? blackPlayerId = null)
     {
-        _whitePlayerId = whitePlayerId;
-        _blackPlayerId = blackPlayerId ?? Guid.Empty;
+        WhitePlayerId = whitePlayerId;
+        BlackPlayerId = blackPlayerId ?? Guid.Empty;
         _chessboard = new Chessboard();
         _chessboard.SetStartupPositions();
         _legalMoves = new LegalMoves();
         _legalMoves.RefreshLegalMoves(_chessboard);
-        _playerOnMove = _whitePlayerId; // White starts first
     }
 
     public List<string> GetMoves(Guid playerId)
     {
         var result = new List<string>();
-        if (playerId == _whitePlayerId)
+        if (playerId == WhitePlayerId)
         {
             result.AddRange(_legalMoves.WhiteLegalMoves.Keys);
         }
-        if (playerId == _blackPlayerId)
+        if (playerId == BlackPlayerId)
         {
             result.AddRange(_legalMoves.BlackLegalMoves.Keys);
         }
         return result;
     }
 
-    public void JoinGame(Guid blackPlayerId)
+    public bool JoinGame(Guid blackPlayerId)
     {
-        if (_blackPlayerId != Guid.Empty)
-            throw new InvalidOperationException("Game already has a black player.");
+        if (BlackPlayerId != Guid.Empty)
+            return false;
 
-        _blackPlayerId = blackPlayerId;
+        BlackPlayerId = blackPlayerId;
+        return true;
     }
 
     public MoveResult MovePlayerPiece(Guid playerId, string move)
@@ -57,23 +60,22 @@ public partial class ChessGame
         _chessboard.MakeMove(legalMove);
         _legalMoves.RefreshLegalMoves(_chessboard);
 
-        _playerOnMove = _playerOnMove == _whitePlayerId ? _blackPlayerId : _whitePlayerId;
+        WhiteOnMove = !WhiteOnMove;
 
         if (GameIsNotFinished())
             return new CorrectMove();
 
-        bool isWhite = _playerOnMove == _whitePlayerId;
-        Guid? winner = !_legalMoves.HasLegalMoves(isWhite) && _chessboard.IsKingInCheck(isWhite) ? _playerInWaiting : null;
+        Guid? winner = !_legalMoves.HasLegalMoves(WhiteOnMove) && _chessboard.IsKingInCheck(WhiteOnMove) ? playerId : null;
 
         return new FinishMove(winner);
     }
 
     private bool GameIsNotFinished()
     {
-        if (_legalMoves.HasLegalMoves(_playerOnMove == _whitePlayerId) == false)
+        if (_legalMoves.HasLegalMoves(WhiteOnMove) == false)
             return false;
 
-        if (!PlayersDidThreeFoldRepetition())
+        if (PlayersDidThreeFoldRepetition())
             return false;
 
         return true;
@@ -105,13 +107,13 @@ public partial class ChessGame
         invalidMove = null;
         legalMove = null;
 
-        if (_playerOnMove != playerId)
+        if (!IsPlayerOnMove(playerId))
         {
             invalidMove = new InvalidMove(ChessServiceChessLogicRes.InvalidMove_NotPlayersTurn);
             return false;
         }
 
-        if (!_legalMoves.IsVerifiedLegalMove(move, _playerOnMove == _whitePlayerId, out legalMove))
+        if (!_legalMoves.IsVerifiedLegalMove(move, WhiteOnMove, out legalMove))
         {
             invalidMove = new InvalidMove(ChessServiceChessLogicRes.InvalidMove_NotFoundInVerifiedLegalMoves);
             return false;
@@ -119,6 +121,8 @@ public partial class ChessGame
 
         return true;
     }
+
+    private bool IsPlayerOnMove(Guid playerId) => WhiteOnMove ? playerId == WhitePlayerId : playerId == BlackPlayerId;
 
     public int[][] GetMinimap()
         => _chessboard.GenerateMinimap();
