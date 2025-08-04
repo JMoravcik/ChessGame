@@ -19,6 +19,8 @@ public partial class ChessGame
     public bool WhiteOnMove { get; private set; } = true;
     public bool WhiteInWaiting => !WhiteOnMove;
 
+    public FinishMove? FinishMove { get; private set; }
+
     public ChessGame(Guid whitePlayerId, Guid? blackPlayerId = null)
     {
         WhitePlayerId = whitePlayerId;
@@ -54,12 +56,17 @@ public partial class ChessGame
 
     public MoveResult MovePlayerPiece(Guid playerId, string move)
     {
+        if (FinishMove != null)
+            return new InvalidMove(ChessServiceChessLogicRes.InvalidMove_GameAlreadyEnded);
+
         if (!MoveMeetsBasicValidations(playerId, move, out var invalidMove, out var legalMove))
             return invalidMove;
 
         _chessboard.MakeMove(legalMove);
-        _legalMoves.RefreshLegalMoves(_chessboard);
+        if (_chessboard[legalMove.TargetField].Piece is Piece piece)
+            piece.HasMoved = true;
 
+        _legalMoves.RefreshLegalMoves(_chessboard);
         WhiteOnMove = !WhiteOnMove;
 
         if (GameIsNotFinished())
@@ -67,7 +74,8 @@ public partial class ChessGame
 
         Guid? winner = !_legalMoves.HasLegalMoves(WhiteOnMove) && _chessboard.IsKingInCheck(WhiteOnMove) ? playerId : null;
 
-        return new FinishMove(winner);
+        FinishMove =  new FinishMove(winner);
+        return FinishMove;
     }
 
     private bool GameIsNotFinished()

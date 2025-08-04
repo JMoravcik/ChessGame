@@ -68,7 +68,7 @@ public class ChessController : BaseController, IChessService
 
         return new (new GetGameStateResponse
         {
-            IsFinished = false,
+            IsFinished = _chessManager.GameFinished(gameId),
             Minimap = minimap,
             LegalMoves = legalMoves,
             WhiteOnTurn = _chessManager.IsWhiteOnTurn(gameId)

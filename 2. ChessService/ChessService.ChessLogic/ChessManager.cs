@@ -68,4 +68,7 @@ public class ChessManager : IChessManager
 
     public bool IsWhiteOnTurn(Guid gameId)
         => _games.TryGetValue(gameId, out var game) ? game.WhiteOnMove : false;
+
+    public bool GameFinished(Guid gameId) 
+        => _games.TryGetValue(gameId, out var game) ? game.FinishMove != null : true;
 }

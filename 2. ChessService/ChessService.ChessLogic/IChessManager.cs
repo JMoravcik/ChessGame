@@ -11,6 +11,7 @@ public interface IChessManager
     bool NoMoreSpace => CurrentGameCount >= MaxGameCount;
 
     Guid CreateNewGame(Guid whitePlayerId, Guid? blackPlayerId);
+    bool GameFinished(Guid gameId);
     int[][]? GetMinimap(Guid gameId);
     List<string> GetMoves(Guid gameId, Guid playerId);
     bool IsInGame(Guid playerId, out Guid gameId);

@@ -8,7 +8,7 @@ public abstract class Piece
 {
     public readonly bool IsWhite;
     public Guid UId { get; set; } = Guid.NewGuid();
-    public bool HasMoved { get; private set; } = false;
+    public bool HasMoved { get; internal set; } = false;
 
     public Piece(bool isWhite)
     {

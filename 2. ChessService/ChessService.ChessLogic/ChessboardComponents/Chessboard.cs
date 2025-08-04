@@ -212,8 +212,6 @@ public partial class Chessboard : IDisposable
 
     private void ComputeAllThreatsFor(bool isWhite)
     {
-        foreach (var field in _fields)
-            field.ThreatenedBy.Clear();
         var pieces = isWhite ? WhitePieceFields.Keys : BlackPieceFields.Keys;
 
         foreach (var piece in pieces)
@@ -222,7 +220,9 @@ public partial class Chessboard : IDisposable
             {
                 if (move == null)
                     continue;
+
                 var targetField = this[move.TargetField];
+
                 if (!targetField.ThreatenedBy.Contains(!isWhite))
                     targetField.ThreatenedBy.Add(!isWhite);
             }
@@ -237,7 +237,7 @@ public partial class Chessboard : IDisposable
 
         var kingField = GetPiecePosition(king);
 
-        return kingField.IsThreatenedFor(!isWhite);
+        return kingField.IsThreatenedFor(isWhite);
     }
 
     #endregion

@@ -117,6 +117,9 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="InvalidMove_GameAlreadyEnded" xml:space="preserve">
+    <value>Tato hra už skončila</value>
+  </data>
   <data name="InvalidMove_NotFoundInVerifiedLegalMoves" xml:space="preserve">
     <value>Tento pohyb nebyl nalezen v možných legálních pohybech!</value>
   </data>

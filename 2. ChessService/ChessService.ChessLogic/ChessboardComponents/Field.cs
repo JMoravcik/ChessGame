@@ -20,7 +20,7 @@ public class Field
     }
 
     public bool IsThreatenedFor(bool isWhite)
-        => ThreatenedBy.Contains(!isWhite);
+        => ThreatenedBy.Contains(isWhite);
 
     public string GetFieldCoordinate() => (Row, Column).ToChessNotation();
 

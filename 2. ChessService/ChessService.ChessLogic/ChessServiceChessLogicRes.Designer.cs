@@ -61,6 +61,15 @@ namespace ChessGame.ChessService.ChessLogic {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Tato hra už skončila.
+        /// </summary>
+        internal static string InvalidMove_GameAlreadyEnded {
+            get {
+                return ResourceManager.GetString("InvalidMove_GameAlreadyEnded", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Tento pohyb nebyl nalezen v možných legálních pohybech!.
         /// </summary>
         internal static string InvalidMove_NotFoundInVerifiedLegalMoves {

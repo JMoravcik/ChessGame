@@ -43,7 +43,7 @@ public class PromotionMove : Move
         bool isWhite = PromotionPieceId < 7;
 
         chessboard.RemovePiece(targetField, false);
-        chessboard.PlacePiece(targetField, new Pawn(isWhite));
+        chessboard.ReturnPiece(targetField, isWhite ? 1 : 7);
 
         base.RevertMove(chessboard);
     }

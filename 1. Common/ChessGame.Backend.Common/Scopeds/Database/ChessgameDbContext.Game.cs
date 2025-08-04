@@ -38,8 +38,7 @@ public partial class ChessgameDbContext : IGameRepository
 
     public async Task<GameRecord?> GetPlayersCurrentGameAsync(Guid playerId)
     {
-        return await GameRecords
-            .FirstOrDefaultAsync(gr => (gr.WhitePlayerId == playerId || gr.BlackPlayerId == playerId) && !gr.IsFinished);
+        return await GameRecords.FirstOrDefaultAsync(gr => (gr.WhitePlayerId == playerId || gr.BlackPlayerId == playerId) && !gr.IsFinished);
     }
 
     public async Task UpdateGameRecordAsync(Guid gameId, bool isFinished)

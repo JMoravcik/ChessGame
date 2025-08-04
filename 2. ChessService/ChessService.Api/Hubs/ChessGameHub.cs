@@ -15,12 +15,14 @@ public class ChessGameHub : Hub, IChessGameHub
 
     private readonly IChessManager _chessManager;
     private readonly IAuthenticationRepository _repository;
+    private readonly IGameRepository _gameRepository;
     private readonly ILogger<ChessGameHub> _logger;
 
-    public ChessGameHub(IChessManager chessManager, IAuthenticationRepository repository, ILogger<ChessGameHub> logger)
+    public ChessGameHub(IChessManager chessManager, IAuthenticationRepository repository, IGameRepository gameRepository, ILogger<ChessGameHub> logger)
     {
         _chessManager = chessManager;
         _repository = repository;
+        _gameRepository = gameRepository;
         _logger = logger;
     }
 
@@ -62,7 +64,7 @@ public class ChessGameHub : Hub, IChessGameHub
         this.Groups.AddToGroupAsync(this.Context.ConnectionId, gameId.ToString());
     }
 
-    public Task MovePieceAsync(string move)
+    public async Task MovePieceAsync(string move)
     {
         var userProfileIdRecord = Context.Items[UserProfileIdKey];
         var gameIdRecord = Context.Items[UserGameIdKey];
@@ -70,29 +72,30 @@ public class ChessGameHub : Hub, IChessGameHub
         if (userProfileIdRecord is not Guid userProfileId)
         {
             _logger.LogWarning("Unauthenticated connected user tried to join game!");
-            return Task.CompletedTask;
+            return;
         }
 
         if (gameIdRecord is not Guid gameId)
         {
             _logger.LogWarning("User which is not playing any game, tried to move piece!");
-            return Task.CompletedTask;
+            return;
         }
 
         var result = _chessManager.MakeMove(userProfileId, gameId, move);
         switch (result)
         {
             case InvalidMove:
-                Clients.Caller.SendAsync(IChessGameHub.InvalidMoveChannel, result);
+                await Clients.Caller.SendAsync(IChessGameHub.InvalidMoveChannel, result);
                 break;
             case CorrectMove:
-                Clients.Group(gameId.ToString()).SendAsync(IChessGameHub.CorrectMoveChannel, result);
+                await Clients.Group(gameId.ToString()).SendAsync(IChessGameHub.CorrectMoveChannel, result);
                 break;
             case FinishMove:
-                Clients.Group(gameId.ToString()).SendAsync(IChessGameHub.FinishMoveChannel, result);
+                {
+                    await Clients.Group(gameId.ToString()).SendAsync(IChessGameHub.FinishMoveChannel, result);
+                    await _gameRepository.UpdateGameRecordAsync(gameId, true);
+                }
                 break;
         }
-
-        return Task.CompletedTask;
     }
 }
