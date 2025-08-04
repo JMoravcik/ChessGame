@@ -14,6 +14,7 @@ public interface IChessManager
     int[][]? GetMinimap(Guid gameId);
     List<string> GetMoves(Guid gameId, Guid playerId);
     bool IsInGame(Guid playerId, out Guid gameId);
+    bool IsWhiteOnTurn(Guid gameId);
     bool JoinGame(Guid gameId, Guid blackPlayerId);
     MoveResult MakeMove(Guid playerId, Guid gameId, string move);
 }

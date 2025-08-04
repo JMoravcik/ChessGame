@@ -133,6 +133,114 @@ namespace ChessGame.NativeApp {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to /images/chessPieces/Black_Bishop.svg.
+        /// </summary>
+        internal static string ChessPieceImg_BlackBishop {
+            get {
+                return ResourceManager.GetString("ChessPieceImg_BlackBishop", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to /images/chessPieces/Black_King.svg.
+        /// </summary>
+        internal static string ChessPieceImg_BlackKing {
+            get {
+                return ResourceManager.GetString("ChessPieceImg_BlackKing", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to /images/chessPieces/Black_Knight.svg.
+        /// </summary>
+        internal static string ChessPieceImg_BlackKnight {
+            get {
+                return ResourceManager.GetString("ChessPieceImg_BlackKnight", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to /images/chessPieces/Black_Pawn.svg.
+        /// </summary>
+        internal static string ChessPieceImg_BlackPawn {
+            get {
+                return ResourceManager.GetString("ChessPieceImg_BlackPawn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to /images/chessPieces/Black_Queen.svg.
+        /// </summary>
+        internal static string ChessPieceImg_BlackQueen {
+            get {
+                return ResourceManager.GetString("ChessPieceImg_BlackQueen", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to /images/chessPieces/Black_Rook.svg.
+        /// </summary>
+        internal static string ChessPieceImg_BlackRook {
+            get {
+                return ResourceManager.GetString("ChessPieceImg_BlackRook", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to /images/chessPieces/White_Bishop.svg.
+        /// </summary>
+        internal static string ChessPieceImg_WhiteBishop {
+            get {
+                return ResourceManager.GetString("ChessPieceImg_WhiteBishop", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to /images/chessPieces/White_King.svg.
+        /// </summary>
+        internal static string ChessPieceImg_WhiteKing {
+            get {
+                return ResourceManager.GetString("ChessPieceImg_WhiteKing", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to /images/chessPieces/White_Knight.svg.
+        /// </summary>
+        internal static string ChessPieceImg_WhiteKnight {
+            get {
+                return ResourceManager.GetString("ChessPieceImg_WhiteKnight", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to /images/chessPieces/White_Pawn.svg.
+        /// </summary>
+        internal static string ChessPieceImg_WhitePawn {
+            get {
+                return ResourceManager.GetString("ChessPieceImg_WhitePawn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to /images/chessPieces/White_Queen.svg.
+        /// </summary>
+        internal static string ChessPieceImg_WhiteQueen {
+            get {
+                return ResourceManager.GetString("ChessPieceImg_WhiteQueen", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to /images/chessPieces/White_Rook.svg.
+        /// </summary>
+        internal static string ChessPieceImg_WhiteRook {
+            get {
+                return ResourceManager.GetString("ChessPieceImg_WhiteRook", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Hrát sám se sebou.
         /// </summary>
         internal static string GameplayPage_PlayAloneButtonTitle {
@@ -160,11 +268,29 @@ namespace ChessGame.NativeApp {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Zavřít.
+        /// </summary>
+        internal static string ModalManager_CloseButtonTitle {
+            get {
+                return ResourceManager.GetString("ModalManager_CloseButtonTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Hrát.
         /// </summary>
         internal static string NavMenu_GamesTitle {
             get {
                 return ResourceManager.GetString("NavMenu_GamesTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Promoce.
+        /// </summary>
+        internal static string PromotionModal_Title {
+            get {
+                return ResourceManager.GetString("PromotionModal_Title", resourceCulture);
             }
         }
         

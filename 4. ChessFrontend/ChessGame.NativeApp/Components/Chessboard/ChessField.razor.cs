@@ -25,25 +25,26 @@ public partial class ChessField : ComponentBase
     private int GetPieceY() => GetY() + 5;
     private bool FieldContainsPiece(out string pieceImagePath)
     {
-        pieceImagePath = PieceId switch
-        {
-            1 => "/images/chessPieces/White_Pawn.svg",
-            2 => "/images/chessPieces/White_Rook.svg",
-            3 => "/images/chessPieces/White_Knight.svg",
-            4 => "/images/chessPieces/White_Bishop.svg",
-            5 => "/images/chessPieces/White_Queen.svg",
-            6 => "/images/chessPieces/White_King.svg",
-            7 => "/images/chessPieces/Black_Pawn.svg",
-            8 => "/images/chessPieces/Black_Rook.svg",
-            9 => "/images/chessPieces/Black_Knight.svg",
-            10 => "/images/chessPieces/Black_Bishop.svg",
-            11 => "/images/chessPieces/Black_Queen.svg",
-            12 => "/images/chessPieces/Black_King.svg",
-            _ => string.Empty,
-        };
-
+        pieceImagePath = GetImageByPieceId(PieceId);
         return string.IsNullOrEmpty(pieceImagePath) == false;
     }
+
+    public static string GetImageByPieceId(int pieceId) => pieceId switch
+    {
+        1 => ChessGameNativeAppRes.ChessPieceImg_WhitePawn,
+        2 => ChessGameNativeAppRes.ChessPieceImg_WhiteRook,
+        3 => ChessGameNativeAppRes.ChessPieceImg_WhiteKnight,
+        4 => ChessGameNativeAppRes.ChessPieceImg_WhiteBishop,
+        5 => ChessGameNativeAppRes.ChessPieceImg_WhiteQueen,
+        6 => ChessGameNativeAppRes.ChessPieceImg_WhiteKing,
+        7 => ChessGameNativeAppRes.ChessPieceImg_BlackPawn,
+        8 => ChessGameNativeAppRes.ChessPieceImg_BlackRook,
+        9 => ChessGameNativeAppRes.ChessPieceImg_BlackKnight,
+        10 => ChessGameNativeAppRes.ChessPieceImg_BlackBishop,
+        11 => ChessGameNativeAppRes.ChessPieceImg_BlackQueen,
+        12 => ChessGameNativeAppRes.ChessPieceImg_BlackKing,
+        _ => string.Empty,
+    };
 
     private string GetClasses()
     {

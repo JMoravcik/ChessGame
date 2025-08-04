@@ -192,4 +192,46 @@
   <data name="GameplayPage_PlayAloneButtonTitle" xml:space="preserve">
     <value>Hrát sám se sebou</value>
   </data>
+  <data name="ModalManager_CloseButtonTitle" xml:space="preserve">
+    <value>Zavřít</value>
+  </data>
+  <data name="ChessPieceImg_WhitePawn" xml:space="preserve">
+    <value>/images/chessPieces/White_Pawn.svg</value>
+  </data>
+  <data name="ChessPieceImg_BlackPawn" xml:space="preserve">
+    <value>/images/chessPieces/Black_Pawn.svg</value>
+  </data>
+  <data name="ChessPieceImg_WhiteRook" xml:space="preserve">
+    <value>/images/chessPieces/White_Rook.svg</value>
+  </data>
+  <data name="ChessPieceImg_BlackRook" xml:space="preserve">
+    <value>/images/chessPieces/Black_Rook.svg</value>
+  </data>
+  <data name="ChessPieceImg_WhiteKnight" xml:space="preserve">
+    <value>/images/chessPieces/White_Knight.svg</value>
+  </data>
+  <data name="ChessPieceImg_BlackKnight" xml:space="preserve">
+    <value>/images/chessPieces/Black_Knight.svg</value>
+  </data>
+  <data name="ChessPieceImg_WhiteBishop" xml:space="preserve">
+    <value>/images/chessPieces/White_Bishop.svg</value>
+  </data>
+  <data name="ChessPieceImg_BlackBishop" xml:space="preserve">
+    <value>/images/chessPieces/Black_Bishop.svg</value>
+  </data>
+  <data name="ChessPieceImg_WhiteQueen" xml:space="preserve">
+    <value>/images/chessPieces/White_Queen.svg</value>
+  </data>
+  <data name="ChessPieceImg_BlackQueen" xml:space="preserve">
+    <value>/images/chessPieces/Black_Queen.svg</value>
+  </data>
+  <data name="ChessPieceImg_WhiteKing" xml:space="preserve">
+    <value>/images/chessPieces/White_King.svg</value>
+  </data>
+  <data name="ChessPieceImg_BlackKing" xml:space="preserve">
+    <value>/images/chessPieces/Black_King.svg</value>
+  </data>
+  <data name="PromotionModal_Title" xml:space="preserve">
+    <value>Promoce</value>
+  </data>
 </root>

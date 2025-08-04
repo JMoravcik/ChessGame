@@ -16,7 +16,7 @@ public partial class ChessGame
     private readonly Chessboard _chessboard;
     private readonly LegalMoves _legalMoves;
 
-    public bool WhiteOnMove = true;
+    public bool WhiteOnMove { get; private set; } = true;
     public bool WhiteInWaiting => !WhiteOnMove;
 
     public ChessGame(Guid whitePlayerId, Guid? blackPlayerId = null)

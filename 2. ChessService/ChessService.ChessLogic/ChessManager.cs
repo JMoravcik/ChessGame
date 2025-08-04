@@ -66,4 +66,6 @@ public class ChessManager : IChessManager
     public int[][]? GetMinimap(Guid gameId)
         => _games.TryGetValue(gameId, out var game) ? game.GetMinimap() : null;
 
+    public bool IsWhiteOnTurn(Guid gameId)
+        => _games.TryGetValue(gameId, out var game) ? game.WhiteOnMove : false;
 }

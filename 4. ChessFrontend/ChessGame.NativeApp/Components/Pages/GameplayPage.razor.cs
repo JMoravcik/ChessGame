@@ -1,7 +1,9 @@
 ﻿using ChessGame.ChessService.Contracts.HubLinker;
 using ChessGame.ChessService.Contracts.IHub;
 using ChessGame.ChessService.Contracts.MoveResults;
+using ChessGame.NativeApp.Components.Chessboard;
 using ChessGame.NativeApp.Components.FlowControl;
+using ChessGame.NativeApp.Components.Layout;
 using ChessGame.NativeApp.Managers;
 using Microsoft.AspNetCore.Components;
 
@@ -9,6 +11,7 @@ namespace ChessGame.NativeApp.Components.Pages;
 
 public partial class GameplayPage : ComponentBase, IInitializable, IDisposable
 {
+    [CascadingParameter] public required IModalManager ModalManager { get; set; }
     [Inject] public required ChessEvents ChessEvents { get; set; }
     [Inject] public required IChessGameHub ChessGameHub { get; set; }
     [Inject] public required GameplayManager GameplayManager { get; set; }
@@ -48,7 +51,17 @@ public partial class GameplayPage : ComponentBase, IInitializable, IDisposable
 
     private async Task OnMoveSelectAsync(string move)
     {
-        await ChessGameHub.MovePieceAsync(move);
+        if (move.Contains("PromotionMove"))
+        {
+            ModalManager.Show<PromotionModal>(ChessGameNativeAppRes.PromotionModal_Title, new()
+            {
+                { nameof(PromotionModal.PromotionMove), move }
+            });
+        }
+        else
+        {
+            await ChessGameHub.MovePieceAsync(move);
+        }
     }
 
     public void Dispose()

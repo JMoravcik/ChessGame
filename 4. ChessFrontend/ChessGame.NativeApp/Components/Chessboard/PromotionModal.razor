@@ -1,0 +1,6 @@
+﻿<div class="promotion-modal">
+    @foreach (var pieceId in GetPromotionOptions())
+    {
+        <img src=@ChessField.GetImageByPieceId(pieceId) @onclick="() => SendPromotionToPieceAsync(pieceId)" />
+    }
+</div>

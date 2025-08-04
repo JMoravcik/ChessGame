@@ -58,7 +58,8 @@ public class ChessController : BaseController, IChessService
                 {
                     IsFinished = true,
                     Minimap = null,
-                    LegalMoves = new List<string>()
+                    LegalMoves = new List<string>(),
+                    WhiteOnTurn = false
                 }
             };
         }
@@ -69,7 +70,8 @@ public class ChessController : BaseController, IChessService
         {
             IsFinished = false,
             Minimap = minimap,
-            LegalMoves = legalMoves
+            LegalMoves = legalMoves,
+            WhiteOnTurn = _chessManager.IsWhiteOnTurn(gameId)
         });
     }
 

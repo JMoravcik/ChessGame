@@ -1,0 +1,19 @@
+﻿
+<CascadingValue TValue="IModalManager" Value="this">
+    @if (_modalType != null)
+    {
+        <div class="modal-overlay">
+            <div class="modal-content">
+                <div class="modal-title">@Title</div>
+                <div class="modal-component">
+                    <DynamicComponent Type="_modalType" Parameters="_modalParameters"/>
+                </div>
+                <div class="modal-close">
+                    <Button Clicked="Hide" Title=@ChessGameNativeAppRes.ModalManager_CloseButtonTitle />
+                </div>
+            </div>
+        </div>
+    }
+
+    @ChildContent
+</CascadingValue>

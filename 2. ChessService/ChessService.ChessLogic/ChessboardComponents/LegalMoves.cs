@@ -21,7 +21,11 @@ public class LegalMoves
     {
         var keyString = move.StartsWith(nameof(PromotionMove)) ? RemoveLastPromotionArgument(move) : move;
         var legalMoves = isWhite ? WhiteLegalMoves : BlackLegalMoves;
-        return legalMoves.TryGetValue(keyString, out legalMove);
+        bool result = legalMoves.TryGetValue(keyString, out legalMove);
+        if (legalMove is PromotionMove promotion)
+            promotion.PromotionPieceId = int.Parse(move.Split(' ').Last());
+
+        return result;
     }
 
     public bool HasLegalMoves(bool isWhite)
@@ -31,9 +35,9 @@ public class LegalMoves
     private Dictionary<string, Move> CheckPlayersPieces(Chessboard chessboard, Dictionary<Piece, Field> pieceFields, bool isWhite)
     {
         var result = new Dictionary<string, Move>();
-        foreach (var pieceField in pieceFields)
+        foreach (var piece in pieceFields.Keys.ToList())
         {
-            foreach (var possibleMove in pieceField.Key.GetPossibleMoves(chessboard))
+            foreach (var possibleMove in piece.GetPossibleMoves(chessboard))
             {
                 IfSetPromotion(possibleMove, (isWhite ? 0 : 6) + 5);
                 chessboard.MakeMove(possibleMove);

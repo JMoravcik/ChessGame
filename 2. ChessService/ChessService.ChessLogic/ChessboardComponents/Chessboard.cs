@@ -148,6 +148,8 @@ public partial class Chessboard : IDisposable
             playersPieces.Remove(enemyPiece);
             if (asCaptured)
                 CapturedPieces.Add(enemyPiece);
+
+            targetField.Piece = null;
         }
     }
 
